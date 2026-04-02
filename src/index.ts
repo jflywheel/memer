@@ -97,8 +97,8 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
       );
     }
 
-    // Call Llama 4 Scout via Workers AI (fast, 131K context, vision-capable)
-    const response = await env.AI.run("@cf/meta/llama-4-scout-17b-16e-instruct" as BaseAiTextGenerationModels, {
+    // Call Llama 3.3 70B via Workers AI (fast, reliable capacity)
+    const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast" as BaseAiTextGenerationModels, {
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: body.prompt },
