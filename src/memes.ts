@@ -35,7 +35,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "two-panel", slots: ["reject", "approve"] },
     tags: ["preference", "comparison", "reject-approve", "better-option", "upgrade"],
     description: "Two panels. Top: Drake recoiling (the bad option). Bottom: Drake pointing and smiling (the preferred option).",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/30b1gx.jpg",
   },
   {
     id: "distracted-boyfriend",
@@ -44,7 +44,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["boyfriend", "other-woman", "girlfriend"] },
     tags: ["temptation", "disloyalty", "abandoning", "new-shiny-thing", "priorities"],
     description: "Stock photo of a man walking with girlfriend while turning to check out another woman. Three labels: boyfriend, other woman, girlfriend.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1ur9b0.jpg",
   },
   {
     id: "tuxedo-pooh",
@@ -53,7 +53,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "two-panel", slots: ["basic", "fancy"] },
     tags: ["classy", "upgrade", "sophisticated", "fancy-version", "elevated"],
     description: "Top: regular Pooh with the basic version. Bottom: Pooh in a tuxedo with the fancy version.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/2ybua0.png",
   },
   {
     id: "buff-doge-cheems",
@@ -62,7 +62,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "two-panel", slots: ["strong", "weak"] },
     tags: ["past-vs-present", "strong-vs-weak", "decline", "nostalgia", "comparison"],
     description: "Left: muscular Shiba Inu (the strong/good version). Right: small sad Shiba Inu (the weak/bad version).",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/43a45p.png",
   },
   {
     id: "two-buttons",
@@ -71,7 +71,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["button-1", "button-2", "person"] },
     tags: ["dilemma", "impossible-choice", "decision", "conflicted", "choosing"],
     description: "Sweating man agonizing over which of two big red buttons to press.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1g8my4.jpg",
   },
   {
     id: "same-picture",
@@ -80,7 +80,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["image-1", "image-2"] },
     tags: ["identical", "no-difference", "sarcasm", "comparison", "corporate"],
     description: "Pam from The Office holds up two photos and declares 'They're the same picture.' Label the two things being compared.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/2za3u1.jpg",
   },
   {
     id: "epic-handshake",
@@ -89,7 +89,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["left-arm", "right-arm", "handshake"] },
     tags: ["agreement", "common-ground", "unity", "unlikely-allies", "shared-interest"],
     description: "Two muscular arms clasping in a handshake (from Predator). Each arm labeled, handshake labeled with what they agree on.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/28j0te.jpg",
   },
   {
     id: "bell-curve",
@@ -98,7 +98,7 @@ const comparisonMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["low-iq", "mid-iq", "high-iq"] },
     tags: ["horseshoe-theory", "extremes-agree", "overthinking", "simple-answer", "irony"],
     description: "Bell curve with three figures. Low and high IQ ends agree on something simple, while the middle overthinks it.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/8tw3vb.png",
   },
 ];
 
@@ -114,7 +114,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["surprise", "predictable-outcome", "obvious", "shocked", "feigned-surprise"],
     description: "Pikachu with mouth wide open in shock. Used when something totally predictable happens and someone acts surprised.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/2kbn1e.jpg",
   },
   {
     id: "monkey-puppet",
@@ -123,7 +123,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["awkward", "guilty", "caught", "pretending", "side-eye", "uncomfortable"],
     description: "Puppet monkey from a Japanese show glancing sideways nervously then looking away.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/2gnnjh.jpg",
   },
   {
     id: "hide-the-pain-harold",
@@ -132,7 +132,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["pain", "hiding-feelings", "fake-smile", "suffering", "pretending-fine"],
     description: "Stock photo of older man smiling at camera with visibly pained eyes. Hiding emotional pain behind a smile.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/gk5el.jpg",
   },
   {
     id: "disaster-girl",
@@ -141,7 +141,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["evil", "sinister", "chaos", "arson", "mischief", "satisfaction"],
     description: "Young girl smirking at the camera with a house on fire behind her.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/23ls.jpg",
   },
   {
     id: "woman-yelling-at-cat",
@@ -150,7 +150,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "two-panel", slots: ["woman", "cat"] },
     tags: ["argument", "misunderstanding", "irrational-anger", "confused", "accusation"],
     description: "Left: angry woman pointing/yelling. Right: confused white cat (Smudge) at a dinner table.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/345v97.jpg",
   },
   {
     id: "mocking-spongebob",
@@ -159,7 +159,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["mocking", "sarcasm", "ridicule", "mimicking", "alternating-case"],
     description: "SpongeBob in a weird bent-over pose, mimicking someone. Text is repeated in aLtErNaTiNg CaSe.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1otk96.jpg",
   },
   {
     id: "laughing-leo",
@@ -168,7 +168,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["smug", "laughing", "pointing", "recognition", "i-knew-it", "vindication"],
     description: "Leonardo DiCaprio from Django Unchained, holding a drink and laughing/pointing.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/4acd7j.png",
   },
   {
     id: "absolute-cinema",
@@ -177,7 +177,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["masterpiece", "dramatic", "epic", "appreciation", "absurd-elevation"],
     description: "Martin Scorsese raising both hands in reverent appreciation. Declares something 'absolute cinema.'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/8d317n.png",
   },
   {
     id: "megamind-peeking",
@@ -186,7 +186,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["curious", "interested", "scheming", "opportunity", "nosy", "suspicious"],
     description: "Animated character Megamind leaning and peeking around a corner with a curious expression.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/64sz4u.png",
   },
   {
     id: "squidward-window",
@@ -195,7 +195,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["fomo", "jealousy", "missing-out", "lonely", "excluded", "longing"],
     description: "Squidward looking out his window sadly while SpongeBob and Patrick play outside.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/145qvv.jpg",
   },
   {
     id: "thinking-about-other-women",
@@ -204,7 +204,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "two-panel", slots: ["woman-thinks", "man-thinks"] },
     tags: ["random-thoughts", "absurd", "overthinking", "nighttime", "assumptions"],
     description: "Couple in bed. Woman: 'I bet he's thinking about other women.' Man is actually thinking about something absurd.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1tl71a.jpg",
   },
   {
     id: "chill-guy",
@@ -213,7 +213,7 @@ const reactionMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["unbothered", "relaxed", "calm", "chaos", "laid-back", "indifferent"],
     description: "Anthropomorphic brown dog in grey sweater and jeans, hands in pockets, smirking. 'I'm just a chill guy.'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/9au02y.jpg",
   },
 ];
 
@@ -229,7 +229,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["basic", "smart", "genius", "galaxy-brain"], panelCount: 4 },
     tags: ["escalation", "levels", "galaxy-brain", "ascending", "increasingly-absurd"],
     description: "4+ panels with increasingly glowing brains. Each level escalates from normal to cosmically enlightened.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1jwhww.jpg",
   },
   {
     id: "clown-makeup",
@@ -238,7 +238,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["step-1", "step-2", "step-3", "step-4"], panelCount: 4 },
     tags: ["bad-decisions", "self-sabotage", "foolish", "clown", "regret", "denial"],
     description: "4 panels of a person applying clown makeup step by step. Each panel is another bad decision leading to a bad outcome.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/38el31.jpg",
   },
   {
     id: "grus-plan",
@@ -247,7 +247,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["step-1", "step-2", "step-3", "realization"], panelCount: 4 },
     tags: ["plan-backfire", "unexpected-consequence", "realization", "horror", "own-plan"],
     description: "Gru presents plan on whiteboard. Steps 1-3 confidently, then panel 4 he's shocked re-reading the bad last step.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/26jxvz.jpg",
   },
   {
     id: "anakin-padme",
@@ -256,7 +256,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["statement", "response", "follow-up", "silence"], panelCount: 4 },
     tags: ["ominous", "concerning", "implications", "red-flag", "right?", "uncomfortable-truth"],
     description: "Anakin says something. Padme responds positively. Padme asks follow-up. Anakin stares silently. 'Right...?'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/5c7lwq.png",
   },
   {
     id: "panik-kalm-panik",
@@ -265,7 +265,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["panik-1", "kalm", "panik-2"], panelCount: 3 },
     tags: ["emotional-rollercoaster", "panic", "relief", "worse", "twist", "anxiety"],
     description: "3 panels: cartoon face panicking, then calm, then panicking again. Situation gets bad, then better, then worse.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/3qqcim.png",
   },
   {
     id: "inhaling-seagull",
@@ -274,7 +274,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["calm", "inhale", "more", "scream"], panelCount: 4 },
     tags: ["escalation", "screaming", "frustration", "buildup", "rage", "excitement"],
     description: "4 photos of a seagull progressively opening its mouth wider, culminating in a full scream.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1w7ygt.jpg",
   },
   {
     id: "american-chopper",
@@ -283,7 +283,7 @@ const escalationMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["person-1a", "person-2a", "person-1b", "person-2b", "person-1c"], panelCount: 5 },
     tags: ["argument", "debate", "heated", "back-and-forth", "fighting", "yelling"],
     description: "5 panels of father and son from American Chopper screaming at each other with furniture thrown.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/2896ro.jpg",
   },
 ];
 
@@ -299,7 +299,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["denial", "disaster", "coping", "everything-is-fine", "fire", "acceptance"],
     description: "Dog sitting in a room on fire, sipping coffee. 'This is fine.' Pretending everything is okay when it clearly isn't.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/wxica.jpg",
   },
   {
     id: "change-my-mind",
@@ -308,7 +308,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["sign-text"] },
     tags: ["hot-take", "controversial-opinion", "debate", "challenge", "bold-claim"],
     description: "Steven Crowder at a folding table with a sign: '[opinion]. Change my mind.'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/24y43o.jpg",
   },
   {
     id: "uno-draw-25",
@@ -317,7 +317,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["reasonable-thing", "person"] },
     tags: ["stubbornness", "refusal", "avoidance", "consequences", "rather-suffer"],
     description: "UNO card: 'do [thing]' or 'Draw 25.' Person holds massive stack of cards. They'd rather suffer than do the obvious.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/3lmzyx.jpg",
   },
   {
     id: "bike-fall",
@@ -326,7 +326,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["riding", "stick-in-spokes", "blame"], panelCount: 3 },
     tags: ["self-sabotage", "blaming-others", "own-fault", "hypocrisy", "caused-own-problem"],
     description: "Person on bike puts stick in own spokes, falls, then blames the stick. Self-inflicted problems blamed on something else.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1b42wl.jpg",
   },
   {
     id: "running-away-balloon",
@@ -335,7 +335,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "label", slots: ["person", "floating-balloon", "ground-balloon"] },
     tags: ["missed-opportunity", "held-back", "obligations", "want-vs-have", "distracted"],
     description: "Person reaches for balloon floating away (thing they want) while another thing on the ground holds them back.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/261o3j.jpg",
   },
   {
     id: "sad-pablo",
@@ -344,7 +344,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["waiting", "boredom", "lonely", "nothing-to-do", "empty", "patience"],
     description: "3 panels of Pablo Escobar standing alone, sitting alone, looking out a window in his empty mansion.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1c1uej.jpg",
   },
   {
     id: "waiting-skeleton",
@@ -353,7 +353,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["waiting-forever", "never-happening", "patience", "died-waiting", "slow"],
     description: "Plastic skeleton sitting on a park bench, implying it waited so long it died.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/2fm6x.jpg",
   },
   {
     id: "boardroom-meeting",
@@ -362,7 +362,7 @@ const situationalMemes: MemeTemplate[] = [
     format: { style: "multi-panel", slots: ["question", "bad-answer-1", "bad-answer-2", "good-answer-thrown-out"], panelCount: 4 },
     tags: ["corporate", "good-idea-rejected", "absurd", "management", "thrown-out-window"],
     description: "Boss asks question. Two bad answers accepted. Person with the right answer gets thrown out the window.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/m78d.jpg",
   },
 ];
 
@@ -378,7 +378,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["refusal", "horror", "no", "absolute-rejection", "dramatic"],
     description: "Michael Scott from The Office screaming 'NO! God! No!' with escalating panic.",
-    templateUrl: "",
+    templateUrl: "https://media.giphy.com/media/8vUEXZA2me7vnuUvrs/giphy.gif",
   },
   {
     id: "oprah-you-get-a",
@@ -387,7 +387,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["generosity", "everyone-gets-one", "abundance", "giveaway", "sarcastic-generosity"],
     description: "Oprah excitedly pointing at her audience. 'You get a [thing]! And you get a [thing]!'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/gtj5t.jpg",
   },
   {
     id: "picard-facepalm",
@@ -396,7 +396,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["disappointment", "exasperation", "stupidity", "facepalm", "frustration"],
     description: "Captain Picard from Star Trek pressing his hand to his face in frustration.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/34uf29.png",
   },
   {
     id: "confused-math-lady",
@@ -405,7 +405,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["confusion", "math", "processing", "trying-to-understand", "calculating", "overwhelmed"],
     description: "Woman looking around confusedly with complex math equations floating around her head.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1c81c1.jpg",
   },
   {
     id: "spongebob-head-out",
@@ -414,7 +414,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["leaving", "nope", "done", "exit", "had-enough", "uncomfortable"],
     description: "SpongeBob standing up from his chair with a blank expression, ready to leave.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/392xtu.jpg",
   },
   {
     id: "roll-safe",
@@ -423,7 +423,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["bad-logic", "clever-stupid", "loophole", "galaxy-brain", "technically-correct"],
     description: "Man smirking and tapping his temple knowingly. Used for bad logic that technically makes sense.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1h7in3.jpg",
   },
   {
     id: "here-we-go-again",
@@ -432,7 +432,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "caption-above", slots: ["caption"] },
     tags: ["recurring", "repetition", "cycle", "again", "monday", "resigned"],
     description: "CJ from GTA San Andreas walking down a street. 'Ah shit, here we go again.' Recurring bad situations.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/31pbk5.png",
   },
   {
     id: "leo-cheers",
@@ -441,7 +441,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["cheers", "toast", "congratulations", "salute", "respect", "well-played"],
     description: "Leo as Gatsby raising a champagne glass with a slight smile.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/39t1o.jpg",
   },
   {
     id: "slow-clap",
@@ -450,7 +450,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["sarcastic-approval", "well-played", "impressed", "building-applause"],
     description: "Person slowly clapping, building to faster applause. Sarcastic or genuine appreciation.",
-    templateUrl: "",
+    templateUrl: "https://media.giphy.com/media/GQnsaAWZ8ty00/giphy.gif",
   },
   {
     id: "mind-blown",
@@ -459,7 +459,7 @@ const reactionGifs: MemeTemplate[] = [
     format: { style: "reaction", slots: ["caption"] },
     tags: ["amazed", "revelation", "mind-blown", "shocking", "plot-twist", "epiphany"],
     description: "Person miming their head exploding with rainbow effects. Tim and Eric style.",
-    templateUrl: "",
+    templateUrl: "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
   },
 ];
 
@@ -475,7 +475,7 @@ const classicMemes: MemeTemplate[] = [
     format: { style: "top-bottom", slots: ["top", "bottom"] },
     tags: ["difficult", "impossible", "underestimated", "warning", "harder-than-it-looks"],
     description: "Boromir from Lord of the Rings gesturing while speaking. 'One does not simply [do difficult thing].'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1bij.jpg",
   },
   {
     id: "futurama-fry",
@@ -484,7 +484,7 @@ const classicMemes: MemeTemplate[] = [
     format: { style: "top-bottom", slots: ["top", "bottom"] },
     tags: ["uncertainty", "suspicion", "not-sure", "squinting", "ambiguous"],
     description: "Fry from Futurama squinting suspiciously. 'Not sure if [thing] or [other thing].'",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1bgw.jpg",
   },
   {
     id: "success-kid",
@@ -493,7 +493,7 @@ const classicMemes: MemeTemplate[] = [
     format: { style: "top-bottom", slots: ["top", "bottom"] },
     tags: ["small-win", "victory", "triumph", "accomplishment", "nailed-it"],
     description: "Toddler on a beach clenching his fist triumphantly. Minor wins that feel great.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1bhk.jpg",
   },
   {
     id: "evil-kermit",
@@ -502,7 +502,7 @@ const classicMemes: MemeTemplate[] = [
     format: { style: "two-panel", slots: ["rational-self", "dark-side"] },
     tags: ["temptation", "inner-voice", "devil-on-shoulder", "self-destructive", "treat-yourself"],
     description: "Regular Kermit (rational self) facing hooded dark Kermit (inner voice tempting you to be bad).",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/1e7ql7.jpg",
   },
   {
     id: "batman-slapping-robin",
@@ -511,7 +511,7 @@ const classicMemes: MemeTemplate[] = [
     format: { style: "speech-bubble", slots: ["robin-says", "batman-says"] },
     tags: ["shut-down", "correction", "interruption", "slap", "wrong-take", "forceful-correction"],
     description: "Robin says something (speech bubble), Batman slaps him and corrects him. Shutting down a bad take.",
-    templateUrl: "",
+    templateUrl: "https://i.imgflip.com/9ehk.jpg",
   },
 ];
 
