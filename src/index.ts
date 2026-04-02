@@ -69,6 +69,11 @@ export default {
       return handleGenerate(request, env);
     }
 
+    // Image proxy - fetches meme templates with CORS headers so canvas can draw them
+    if (url.pathname === "/api/image") {
+      return handleImageProxy(url);
+    }
+
     // Health check
     if (url.pathname === "/api/health") {
       return Response.json({ status: "ok", memeCount: memeLibrary.length });
@@ -136,11 +141,14 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
     // Enrich the response with full meme template data
     const enriched = parsed.memes?.map((match: { id: string; name: string; text: Record<string, string>; explanation: string }) => {
       const template = memeLibrary.find((m) => m.id === match.id);
+      // Proxy the template URL through our worker to avoid CORS issues with canvas
+      const rawUrl = template?.templateUrl ?? "";
+      const proxyUrl = rawUrl ? "/api/image?url=" + encodeURIComponent(rawUrl) : "";
       return {
         ...match,
         type: template?.type ?? "image",
         format: template?.format,
-        templateUrl: template?.templateUrl,
+        templateUrl: proxyUrl,
       };
     });
 
@@ -158,4 +166,35 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
       { status: isCapacity ? 503 : 500 }
     );
   }
+}
+
+// Proxy meme template images so canvas can draw them (avoids CORS issues)
+async function handleImageProxy(url: URL): Promise<Response> {
+  const imageUrl = url.searchParams.get("url");
+  if (!imageUrl) {
+    return Response.json({ error: "Missing url param" }, { status: 400 });
+  }
+
+  // Only allow imgflip and giphy domains
+  const allowed = ["i.imgflip.com", "media.giphy.com"];
+  let parsedUrl: URL;
+  try {
+    parsedUrl = new URL(imageUrl);
+  } catch {
+    return Response.json({ error: "Invalid URL" }, { status: 400 });
+  }
+
+  if (!allowed.includes(parsedUrl.hostname)) {
+    return Response.json({ error: "Domain not allowed" }, { status: 403 });
+  }
+
+  const imgRes = await fetch(imageUrl);
+  const headers = new Headers(imgRes.headers);
+  headers.set("Access-Control-Allow-Origin", "*");
+  headers.set("Cache-Control", "public, max-age=86400");
+
+  return new Response(imgRes.body, {
+    status: imgRes.status,
+    headers,
+  });
 }

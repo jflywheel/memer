@@ -121,7 +121,7 @@
       border: 1px solid #2a2a2a;
       border-radius: 12px;
       padding: 1.25rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       transition: border-color 0.2s;
     }
 
@@ -151,46 +151,41 @@
     .meme-type.image { background: #2d3436; color: #74b9ff; }
     .meme-type.gif { background: #2d3436; color: #55efc4; }
 
-    .meme-card .meme-text {
-      background: #111;
+    .meme-card canvas {
+      width: 100%;
       border-radius: 8px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.75rem;
+      display: block;
     }
 
-    .meme-card .slot {
-      margin-bottom: 0.5rem;
+    .meme-card .meme-actions {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
     }
 
-    .meme-card .slot:last-child { margin-bottom: 0; }
-
-    .meme-card .slot-label {
-      font-size: 0.7rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.15rem;
-    }
-
-    .meme-card .slot-value {
-      font-size: 1rem;
-      color: #fff;
+    .meme-card .meme-actions button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #ccc;
+      cursor: pointer;
+      font-family: inherit;
+      width: auto;
       font-weight: 500;
     }
 
-    .meme-card .meme-image {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-      max-height: 400px;
-      object-fit: contain;
-      background: #111;
+    .meme-card .meme-actions button:hover {
+      background: #333;
+      color: #fff;
     }
 
     .meme-card .explanation {
       font-size: 0.85rem;
       color: #888;
       font-style: italic;
+      margin-top: 0.5rem;
     }
 
     .error-msg {
@@ -257,11 +252,8 @@
       promptEl.focus();
     }
 
-    // Submit on Ctrl+Enter or Cmd+Enter
     promptEl.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-        generate();
-      }
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) generate();
     });
 
     async function generate() {
@@ -291,7 +283,8 @@
           return;
         }
 
-        outputEl.innerHTML = data.memes.map(renderMemeCard).join("");
+        outputEl.innerHTML = "";
+        data.memes.forEach((meme, i) => renderMemeCard(meme, i));
       } catch (err) {
         outputEl.innerHTML = '<div class="error-msg">Failed to connect. Try again.</div>';
         console.error(err);
@@ -301,34 +294,352 @@
       }
     }
 
-    function renderMemeCard(meme) {
+    function renderMemeCard(meme, index) {
+      const card = document.createElement("div");
+      card.className = "meme-card";
+
       const typeClass = meme.type || "image";
-      const slots = meme.text || {};
-      const slotsHtml = Object.entries(slots)
-        .map(([key, val]) =>
-          '<div class="slot">' +
-            '<div class="slot-label">' + escapeHtml(key.replace(/-/g, " ")) + '</div>' +
-            '<div class="slot-value">' + escapeHtml(val) + '</div>' +
-          '</div>'
-        )
-        .join("");
 
-      // Show the meme template image/gif if we have a URL
-      const imageHtml = meme.templateUrl
-        ? '<img class="meme-image" src="' + escapeHtml(meme.templateUrl) + '" alt="' + escapeHtml(meme.name) + '" loading="lazy">'
-        : '';
+      // Header
+      const header = document.createElement("div");
+      header.className = "meme-header";
+      header.innerHTML =
+        '<span class="meme-name">' + escapeHtml(meme.name) + '</span>' +
+        '<span class="meme-type ' + typeClass + '">' + typeClass + '</span>';
+      card.appendChild(header);
 
-      return (
-        '<div class="meme-card">' +
-          '<div class="meme-header">' +
-            '<span class="meme-name">' + escapeHtml(meme.name) + '</span>' +
-            '<span class="meme-type ' + typeClass + '">' + typeClass + '</span>' +
-          '</div>' +
-          imageHtml +
-          '<div class="meme-text">' + slotsHtml + '</div>' +
-          (meme.explanation ? '<div class="explanation">' + escapeHtml(meme.explanation) + '</div>' : '') +
-        '</div>'
-      );
+      // Canvas for the rendered meme
+      const canvas = document.createElement("canvas");
+      canvas.id = "meme-canvas-" + index;
+      card.appendChild(canvas);
+
+      // Download button
+      const actions = document.createElement("div");
+      actions.className = "meme-actions";
+      const dlBtn = document.createElement("button");
+      dlBtn.textContent = "Download";
+      dlBtn.onclick = () => downloadCanvas(canvas, meme.id);
+      actions.appendChild(dlBtn);
+      card.appendChild(actions);
+
+      // Explanation
+      if (meme.explanation) {
+        const exp = document.createElement("div");
+        exp.className = "explanation";
+        exp.textContent = meme.explanation;
+        card.appendChild(exp);
+      }
+
+      outputEl.appendChild(card);
+
+      // Render the meme onto the canvas
+      renderMeme(canvas, meme);
+    }
+
+    function downloadCanvas(canvas, name) {
+      const link = document.createElement("a");
+      link.download = name + ".png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    // =========================================================
+    // MEME RENDERER - draws text on the template image
+    // =========================================================
+
+    function renderMeme(canvas, meme) {
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+
+      img.onload = () => {
+        const style = meme.format?.style || "caption-above";
+        const textEntries = Object.values(meme.text || {});
+
+        if (style === "caption-above" || style === "reaction") {
+          drawCaptionAbove(canvas, ctx, img, textEntries);
+        } else if (style === "top-bottom") {
+          drawTopBottom(canvas, ctx, img, textEntries);
+        } else if (style === "two-panel") {
+          drawTwoPanel(canvas, ctx, img, textEntries);
+        } else if (style === "multi-panel") {
+          drawMultiPanel(canvas, ctx, img, textEntries, meme.format?.panelCount || textEntries.length);
+        } else if (style === "label") {
+          drawLabels(canvas, ctx, img, meme.text || {}, meme.id);
+        } else if (style === "speech-bubble") {
+          drawTopBottom(canvas, ctx, img, textEntries);
+        } else {
+          // Fallback: caption above
+          drawCaptionAbove(canvas, ctx, img, textEntries);
+        }
+      };
+
+      img.onerror = () => {
+        // If image fails to load, just show text
+        canvas.width = 500;
+        canvas.height = 300;
+        ctx.fillStyle = "#111";
+        ctx.fillRect(0, 0, 500, 300);
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 20px sans-serif";
+        ctx.textAlign = "center";
+        const texts = Object.values(meme.text || {});
+        texts.forEach((t, i) => {
+          ctx.fillText(t, 250, 100 + i * 40);
+        });
+      };
+
+      img.src = meme.templateUrl || "";
+    }
+
+    // Style 1: Black bar with white text above the image
+    // Used for: caption-above, reaction formats
+    function drawCaptionAbove(canvas, ctx, img, texts) {
+      const text = texts.join(" ");
+      const imgW = img.naturalWidth;
+      const imgH = img.naturalHeight;
+      const padding = 16;
+      const fontSize = Math.max(18, Math.min(32, imgW / 20));
+
+      ctx.font = "bold " + fontSize + "px -apple-system, 'Segoe UI', sans-serif";
+
+      // Word-wrap the caption text
+      const lines = wrapText(ctx, text, imgW - padding * 2);
+      const lineHeight = fontSize * 1.3;
+      const captionH = lines.length * lineHeight + padding * 2;
+
+      canvas.width = imgW;
+      canvas.height = imgH + captionH;
+
+      // Draw caption bar
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, imgW, captionH);
+
+      // Draw caption text
+      ctx.fillStyle = "#fff";
+      ctx.font = "bold " + fontSize + "px -apple-system, 'Segoe UI', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      lines.forEach((line, i) => {
+        ctx.fillText(line, imgW / 2, padding + i * lineHeight);
+      });
+
+      // Draw image below
+      ctx.drawImage(img, 0, captionH, imgW, imgH);
+    }
+
+    // Style 2: Classic Impact font top and bottom
+    // Used for: top-bottom, speech-bubble formats
+    function drawTopBottom(canvas, ctx, img, texts) {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const topText = (texts[0] || "").toUpperCase();
+      const bottomText = (texts[1] || texts[0] || "").toUpperCase();
+      // If there's only one text entry, put it at the top only
+      const hasTwo = texts.length >= 2;
+
+      const fontSize = Math.max(24, Math.min(60, canvas.width / 12));
+
+      drawImpactText(ctx, topText, canvas.width / 2, fontSize + 10, fontSize, canvas.width - 20);
+      if (hasTwo) {
+        drawImpactText(ctx, bottomText, canvas.width / 2, canvas.height - 20, fontSize, canvas.width - 20, true);
+      }
+    }
+
+    // Style 3: Two-panel memes (Drake, Tuxedo Pooh, Woman Yelling at Cat, etc.)
+    // Text overlaid on each half of the image
+    function drawTwoPanel(canvas, ctx, img, texts) {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const fontSize = Math.max(18, Math.min(40, canvas.width / 16));
+      const halfH = canvas.height / 2;
+
+      // Top panel text - positioned on the right side for Drake-style,
+      // or centered for others. We'll put it right-of-center.
+      const textX = canvas.width * 0.65;
+      const textMaxW = canvas.width * 0.55;
+
+      if (texts[0]) {
+        drawPanelText(ctx, texts[0].toUpperCase(), textX, halfH * 0.5, fontSize, textMaxW);
+      }
+      if (texts[1]) {
+        drawPanelText(ctx, texts[1].toUpperCase(), textX, halfH + halfH * 0.5, fontSize, textMaxW);
+      }
+    }
+
+    // Style 4: Multi-panel (Expanding Brain, Gru's Plan, Clown Makeup, etc.)
+    // Divides image into equal vertical sections
+    function drawMultiPanel(canvas, ctx, img, texts, panelCount) {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const count = Math.max(panelCount, texts.length);
+      const panelH = canvas.height / count;
+      const fontSize = Math.max(14, Math.min(28, canvas.width / 22));
+
+      texts.forEach((text, i) => {
+        if (!text) return;
+        const centerY = panelH * i + panelH * 0.5;
+        // Put text on the left side for most multi-panel memes
+        const textX = canvas.width * 0.35;
+        const maxW = canvas.width * 0.6;
+        drawPanelText(ctx, text.toUpperCase(), textX, centerY, fontSize, maxW);
+      });
+    }
+
+    // Style 5: Label memes (Distracted Boyfriend, Epic Handshake, etc.)
+    // Position labels at predefined spots based on the meme ID
+    function drawLabels(canvas, ctx, img, textObj, memeId) {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+
+      const entries = Object.entries(textObj);
+      const fontSize = Math.max(16, Math.min(32, canvas.width / 18));
+
+      // Meme-specific label positions (as fractions of width/height)
+      const positions = getLabelPositions(memeId, entries.length);
+
+      entries.forEach(([key, val], i) => {
+        const pos = positions[i] || { x: 0.5, y: 0.2 + i * 0.3 };
+        const x = canvas.width * pos.x;
+        const y = canvas.height * pos.y;
+        drawImpactText(ctx, String(val).toUpperCase(), x, y, fontSize, canvas.width * 0.4);
+      });
+    }
+
+    // Returns label positions for known meme layouts
+    function getLabelPositions(memeId, count) {
+      const layouts = {
+        "distracted-boyfriend": [
+          { x: 0.52, y: 0.15 }, // boyfriend
+          { x: 0.18, y: 0.15 }, // other woman
+          { x: 0.78, y: 0.15 }, // girlfriend
+        ],
+        "epic-handshake": [
+          { x: 0.2, y: 0.2 },   // left arm
+          { x: 0.8, y: 0.2 },   // right arm
+          { x: 0.5, y: 0.75 },  // handshake
+        ],
+        "two-buttons": [
+          { x: 0.3, y: 0.2 },   // button 1
+          { x: 0.7, y: 0.2 },   // button 2
+          { x: 0.5, y: 0.8 },   // person
+        ],
+        "same-picture": [
+          { x: 0.25, y: 0.15 }, // image 1
+          { x: 0.75, y: 0.15 }, // image 2
+        ],
+        "bell-curve": [
+          { x: 0.12, y: 0.4 },  // low iq
+          { x: 0.5, y: 0.25 },  // mid iq
+          { x: 0.88, y: 0.4 },  // high iq
+        ],
+        "change-my-mind": [
+          { x: 0.48, y: 0.65 }, // sign text
+        ],
+        "uno-draw-25": [
+          { x: 0.25, y: 0.4 },  // reasonable thing
+          { x: 0.75, y: 0.5 },  // person
+        ],
+        "running-away-balloon": [
+          { x: 0.55, y: 0.7 },  // person
+          { x: 0.35, y: 0.15 }, // floating balloon
+          { x: 0.7, y: 0.5 },   // ground balloon
+        ],
+      };
+
+      if (layouts[memeId]) return layouts[memeId];
+
+      // Default: spread labels evenly
+      const result = [];
+      for (let i = 0; i < count; i++) {
+        result.push({ x: 0.5, y: 0.15 + (i * 0.7) / Math.max(count - 1, 1) });
+      }
+      return result;
+    }
+
+    // =========================================================
+    // TEXT DRAWING HELPERS
+    // =========================================================
+
+    // Classic white Impact text with black outline
+    function drawImpactText(ctx, text, x, y, fontSize, maxWidth, fromBottom) {
+      ctx.save();
+      ctx.font = "bold " + fontSize + "px Impact, 'Arial Black', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = fromBottom ? "bottom" : "top";
+      ctx.lineJoin = "round";
+
+      // Word wrap
+      const lines = wrapText(ctx, text, maxWidth);
+      const lineHeight = fontSize * 1.15;
+
+      // If drawing from bottom, shift up
+      const startY = fromBottom ? y - (lines.length - 1) * lineHeight : y;
+
+      lines.forEach((line, i) => {
+        const ly = startY + i * lineHeight;
+        // Black outline
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = fontSize / 6;
+        ctx.strokeText(line, x, ly);
+        // White fill
+        ctx.fillStyle = "#fff";
+        ctx.fillText(line, x, ly);
+      });
+
+      ctx.restore();
+    }
+
+    // White outlined text for panel overlays (slightly different style)
+    function drawPanelText(ctx, text, x, y, fontSize, maxWidth) {
+      ctx.save();
+      ctx.font = "bold " + fontSize + "px Impact, 'Arial Black', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.lineJoin = "round";
+
+      const lines = wrapText(ctx, text, maxWidth);
+      const lineHeight = fontSize * 1.15;
+      const totalH = lines.length * lineHeight;
+      const startY = y - totalH / 2 + lineHeight / 2;
+
+      lines.forEach((line, i) => {
+        const ly = startY + i * lineHeight;
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = fontSize / 6;
+        ctx.strokeText(line, x, ly);
+        ctx.fillStyle = "#fff";
+        ctx.fillText(line, x, ly);
+      });
+
+      ctx.restore();
+    }
+
+    // Simple word wrapper
+    function wrapText(ctx, text, maxWidth) {
+      if (!text) return [""];
+      const words = text.split(" ");
+      const lines = [];
+      let current = "";
+
+      words.forEach((word) => {
+        const test = current ? current + " " + word : word;
+        if (ctx.measureText(test).width > maxWidth && current) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = test;
+        }
+      });
+      if (current) lines.push(current);
+      return lines.length ? lines : [""];
     }
 
     function escapeHtml(str) {
