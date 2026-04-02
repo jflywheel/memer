@@ -178,6 +178,15 @@
       font-weight: 500;
     }
 
+    .meme-card .meme-image {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      max-height: 400px;
+      object-fit: contain;
+      background: #111;
+    }
+
     .meme-card .explanation {
       font-size: 0.85rem;
       color: #888;
@@ -304,12 +313,18 @@
         )
         .join("");
 
+      // Show the meme template image/gif if we have a URL
+      const imageHtml = meme.templateUrl
+        ? '<img class="meme-image" src="' + escapeHtml(meme.templateUrl) + '" alt="' + escapeHtml(meme.name) + '" loading="lazy">'
+        : '';
+
       return (
         '<div class="meme-card">' +
           '<div class="meme-header">' +
             '<span class="meme-name">' + escapeHtml(meme.name) + '</span>' +
             '<span class="meme-type ' + typeClass + '">' + typeClass + '</span>' +
           '</div>' +
+          imageHtml +
           '<div class="meme-text">' + slotsHtml + '</div>' +
           (meme.explanation ? '<div class="explanation">' + escapeHtml(meme.explanation) + '</div>' : '') +
         '</div>'

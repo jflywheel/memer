@@ -5,6 +5,7 @@ import { memeLibrary, buildCatalogPrompt } from "./memes";
 
 interface Env {
   AI: Ai;
+  ASSETS: Fetcher;
 }
 
 // System prompt that tells the LLM how to match memes
@@ -36,8 +37,31 @@ Respond in this exact JSON format (no markdown, no code blocks, just raw JSON):
   ]
 }`;
 
+// Basic auth check - returns 401 if not authenticated
+function checkAuth(request: Request): Response | null {
+  const auth = request.headers.get("Authorization");
+  if (!auth || !auth.startsWith("Basic ")) {
+    return new Response("Unauthorized", {
+      status: 401,
+      headers: { "WWW-Authenticate": 'Basic realm="memer"' },
+    });
+  }
+  const decoded = atob(auth.slice(6));
+  if (decoded !== "dog:dog") {
+    return new Response("Unauthorized", {
+      status: 401,
+      headers: { "WWW-Authenticate": 'Basic realm="memer"' },
+    });
+  }
+  return null;
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    // Check basic auth on all requests
+    const authResponse = checkAuth(request);
+    if (authResponse) return authResponse;
+
     const url = new URL(request.url);
 
     // API endpoint for meme matching
@@ -51,7 +75,7 @@ export default {
     }
 
     // Everything else is served by the static assets (public/ folder)
-    return new Response("Not found", { status: 404 });
+    return env.ASSETS.fetch(request);
   },
 };
 
@@ -122,10 +146,16 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
 
     return Response.json({ prompt: body.prompt, memes: enriched ?? parsed.memes });
   } catch (err) {
-    console.error("Generate failed:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("Generate failed:", msg);
+    // Surface capacity errors so the frontend can show a retry message
+    const isCapacity = msg.includes("Capacity");
     return Response.json(
-      { error: "Internal error", code: "INTERNAL_ERROR" },
-      { status: 500 }
+      {
+        error: isCapacity ? "AI is busy, try again in a few seconds" : "Internal error",
+        code: isCapacity ? "AI_CAPACITY" : "INTERNAL_ERROR",
+      },
+      { status: isCapacity ? 503 : 500 }
     );
   }
 }
