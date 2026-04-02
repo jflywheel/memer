@@ -73,8 +73,8 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
       );
     }
 
-    // Call Kimi K2.5 via Workers AI
-    const response = await env.AI.run("@cf/moonshotai/kimi-k2.5" as BaseAiTextGenerationModels, {
+    // Call Llama 4 Scout via Workers AI (fast, 131K context, vision-capable)
+    const response = await env.AI.run("@cf/meta/llama-4-scout-17b-16e-instruct" as BaseAiTextGenerationModels, {
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: body.prompt },
@@ -83,26 +83,28 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
       max_tokens: 2048,
     });
 
-    // Workers AI returns { response: string } for text generation
-    const rawText = typeof response === "string" ? response : (response as { response?: string }).response;
+    // Workers AI returns { response: string } or the parsed object directly
+    const aiResult = response as { response?: string | object };
+    let parsed: { memes?: unknown[] };
 
-    if (!rawText) {
+    if (typeof aiResult.response === "object" && aiResult.response !== null) {
+      // Model returned structured JSON directly
+      parsed = aiResult.response as { memes?: unknown[] };
+    } else if (typeof aiResult.response === "string") {
+      // Model returned a string, parse it
+      try {
+        const cleaned = aiResult.response.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+        parsed = JSON.parse(cleaned);
+      } catch {
+        console.error("Failed to parse AI response:", aiResult.response);
+        return Response.json(
+          { error: "AI returned invalid format", code: "AI_PARSE_ERROR" },
+          { status: 500 }
+        );
+      }
+    } else {
       return Response.json(
         { error: "No response from AI", code: "AI_EMPTY" },
-        { status: 500 }
-      );
-    }
-
-    // Parse the JSON response from the LLM
-    let parsed;
-    try {
-      // Strip any markdown code fences the LLM might add despite instructions
-      const cleaned = rawText.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-      parsed = JSON.parse(cleaned);
-    } catch {
-      console.error("Failed to parse AI response:", rawText);
-      return Response.json(
-        { error: "AI returned invalid format", code: "AI_PARSE_ERROR", raw: rawText },
         { status: 500 }
       );
     }
